@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class InMemoryDb implements StorageInterface {
+public class InMemoryDb implements IAbstractDb {
     private Map<Integer, Meal> storage;
 
     public InMemoryDb() {

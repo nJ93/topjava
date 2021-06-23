@@ -16,6 +16,7 @@
 <h3><a href="index.html">Home</a></h3>
 <hr>
 <h2>Meals</h2>
+<a href="meals?action=create">Add Meal</a>
 <a href="edit_meal.jsp">Add Meal</a>
 <table border="1" width="500" cellspacing="0">
     <tr>
@@ -26,12 +27,12 @@
         <th></th>
     </tr>
     <c:forEach items="${meals}" var="meal">
-        <tr>
-            <td class="${meal.excess ? 'red-text' : 'green-text'}">${meal.date}</td>
-            <td class="${meal.excess ? 'red-text' : 'green-text'}">${meal.description}</td>
-            <td class="${meal.excess ? 'red-text' : 'green-text'}">${meal.calories}</td>
-            <td><a href="#">Update</a></td>
-            <td><a href="#">Delete</a></td>
+        <tr class="${meal.excess ? 'red-text' : 'green-text'}">
+            <td>${meal.date}</td>
+            <td>${meal.description}</td>
+            <td>${meal.calories}</td>
+            <td><a href="meals?action=update">Update</a></td>
+            <td><a href="meals?action=delete">Delete</a></td>
         </tr>
     </c:forEach>
 </table>
