@@ -17,7 +17,6 @@
 <hr>
 <h2>Meals</h2>
 <a href="meals?action=create">Add Meal</a>
-<a href="edit_meal.jsp">Add Meal</a>
 <table border="1" width="500" cellspacing="0">
     <tr>
         <th>Date</th>

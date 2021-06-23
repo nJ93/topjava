@@ -22,13 +22,28 @@ public class MealServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<MealTo> meals = MealsUtil.initializeMeals(LocalTime.of(0, 0), LocalTime.of(23, 59));
-        request.setAttribute("meals", meals);
-        request.getRequestDispatcher("/meals.jsp").forward(request, response);
+        String action = request.getParameter("action");
+        switch (action == null ? "list" : action) {
+            case "create":
+                request.getRequestDispatcher("/edit_meal.jsp").forward(request, response);
+                break;
+            case "update":
+            case "delete":
+                int id = Integer.parseInt(request.getParameter("id"));
+                mealDao.deleteMeal(id);
+                response.sendRedirect("meals");
+                break;
+            case "list":
+            default:
+                List<MealTo> meals = MealsUtil.initializeMeals(LocalTime.of(0, 0), LocalTime.of(23, 59));
+                request.setAttribute("meals", meals);
+                request.getRequestDispatcher("/meals.jsp").forward(request, response);
+                break;
+        }
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String s = "asd";
+
     }
 }
