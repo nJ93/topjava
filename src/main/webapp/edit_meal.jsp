@@ -11,15 +11,15 @@
     <table>
         <tr>
             <td><label for="mealdate">DateTime:</label></td>
-            <td><input type="date" id="mealdate"></td>
+            <td><input type="date" id="mealdate" name="mealdate"></td>
         </tr>
         <tr>
             <td><label for="description">Description:</label></td>
-            <td><input type="text" id="description"></td>
+            <td><input type="text" id="description" name="description"></td>
         </tr>
         <tr>
             <td><label for="calories">Calories:</label></td>
-            <td><input type="number" id="calories"></td>
+            <td><input type="number" id="calories" name="calories"></td>
         </tr>
     </table>
     <input type="submit" value="Save">

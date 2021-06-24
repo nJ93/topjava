@@ -9,7 +9,7 @@ public class MealDao {
     private InMemoryDb inMemoryDb;
 
     public MealDao() {
-        this.inMemoryDb = new InMemoryDb();
+        this.inMemoryDb = InMemoryDb.getInstance();
     }
 
     public void addMeal(Meal meal) {
