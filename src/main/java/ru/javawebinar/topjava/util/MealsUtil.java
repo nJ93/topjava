@@ -11,11 +11,14 @@ import java.time.Month;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class MealsUtil {
     private static final int CALORIES_PER_DAY = 2000;
     private static final InMemoryDb inMemoryDb = InMemoryDb.getInstance();
+    public static final AtomicInteger MEAL_COUNTER = new AtomicInteger();
+//    public static final AtomicInteger MEAL_TO_COUNTER = new AtomicInteger();
 
 //    public static List<MealTo> initializeMeals(LocalTime startTime, LocalTime endTime) {
 //        List<Meal> meals = Arrays.asList(
@@ -30,7 +33,7 @@ public class MealsUtil {
 //        return filteredByStreams(meals, startTime, endTime, CALORIES_PER_DAY);
 //    }
 
-    public static void initializeMeals(LocalTime startTime, LocalTime endTime) {
+    public static void initializeMeals() {
         inMemoryDb.addMeal(new Meal(LocalDateTime.of(2020, Month.JANUARY, 30, 10, 0), "Завтрак", 500));
         inMemoryDb.addMeal(new Meal(LocalDateTime.of(2020, Month.JANUARY, 30, 13, 0), "Обед", 1000));
         inMemoryDb.addMeal(new Meal(LocalDateTime.of(2020, Month.JANUARY, 30, 20, 0), "Ужин", 500));
@@ -54,7 +57,7 @@ public class MealsUtil {
     }
 
     private static MealTo createTo(Meal meal, boolean excess) {
-        return new MealTo(meal.getDateTime(), meal.getDescription(), meal.getCalories(), excess);
+        return new MealTo(meal.getId(), meal.getDateTime(), meal.getDescription(), meal.getCalories(), excess);
     }
 
 

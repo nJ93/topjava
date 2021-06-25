@@ -49,7 +49,7 @@ public class InMemoryDb implements IAbstractDb {
     }
 
     @Override
-    public List<MealTo> getAllMealsExceed(LocalTime startTime, LocalTime endTime) {
-        return MealsUtil.filteredByStreams(getAllMeals(), startTime, endTime, 2000);
+    public List<MealTo> getAllMealsExceed(LocalTime startTime, LocalTime endTime, int calories) {
+        return MealsUtil.filteredByStreams(getAllMeals(), startTime, endTime, calories);
     }
 }

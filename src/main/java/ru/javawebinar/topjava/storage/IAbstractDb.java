@@ -12,5 +12,5 @@ public interface IAbstractDb {
     void updateMeal(Meal meal);
     List<Meal> getAllMeals();
     Meal getMealById(int id);
-    List<MealTo> getAllMealsExceed(LocalTime startTime, LocalTime endTime);
+    List<MealTo> getAllMealsExceed(LocalTime startTime, LocalTime endTime, int calories);
 }
