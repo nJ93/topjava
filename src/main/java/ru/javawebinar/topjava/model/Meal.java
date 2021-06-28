@@ -18,8 +18,8 @@ public class Meal {
 
     public Meal() {
         id = MealsUtil.MEAL_COUNTER.incrementAndGet();
-        dateTime = null;
-        description = null;
+        dateTime = LocalDateTime.now();
+        description = "";
         calories = 0;
     }
 
@@ -30,7 +30,12 @@ public class Meal {
         this.calories = calories;
     }
 
-
+    public Meal(int id, LocalDateTime dateTime, String description, int calories) {
+        this.id = id;
+        this.dateTime = dateTime;
+        this.description = description;
+        this.calories = calories;
+    }
 
     public int getId() {
         return id;

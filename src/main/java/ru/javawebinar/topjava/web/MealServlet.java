@@ -35,6 +35,8 @@ public class MealServlet extends HttpServlet {
         switch (action == null ? "list" : action) {
             case "create":
                 log.debug("Begin meal creating...");
+                Meal meal = new Meal();
+                request.setAttribute("meal", meal);
                 request.getRequestDispatcher("/edit_meal.jsp").forward(request, response);
                 break;
             case "update":
@@ -43,8 +45,8 @@ public class MealServlet extends HttpServlet {
                     request.setAttribute("meal", db.getMealById(Integer.parseInt(updateId)));
                     request.getRequestDispatcher("/edit_meal.jsp").forward(request, response);
                 }
-                Meal meal = new Meal();
-                request.setAttribute("meal", meal);
+//                Meal meal = new Meal();
+//                request.setAttribute("meal", meal);
                 log.debug("Updating meal with id = " + updateId);
                 request.getRequestDispatcher("/edit_meal.jsp").forward(request, response);
             case "delete":
@@ -67,11 +69,12 @@ public class MealServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        LocalDateTime mealdate = null;
+        request.setCharacterEncoding("UTF-8");
+        int id = Integer.parseInt(request.getParameter("mealid"));
         LocalDateTime mealdate = LocalDate.parse(request.getParameter("mealdate"), DateTimeFormatter.ofPattern("yyyy-MM-dd")).atStartOfDay();
         int calories = Integer.parseInt(request.getParameter("calories"));
         String description = request.getParameter("description");
-        Meal meal = new Meal(mealdate, description, calories);
+        Meal meal = new Meal(id, mealdate, description, calories);
         db.addMeal(meal);
         response.sendRedirect("meals");
     }
