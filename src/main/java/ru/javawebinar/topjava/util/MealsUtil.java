@@ -15,6 +15,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class MealsUtil {
+    public static final int DEFAULT_USER_ID = 1;
     public static final int DEFAULT_CALORIES_PER_DAY = 2000;
 
     public static final List<Meal> meals = Arrays.asList(

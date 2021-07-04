@@ -16,6 +16,8 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
+import static ru.javawebinar.topjava.util.MealsUtil.DEFAULT_USER_ID;
+
 public class MealServlet extends HttpServlet {
     private static final Logger log = LoggerFactory.getLogger(MealServlet.class);
 
@@ -30,15 +32,13 @@ public class MealServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         String id = request.getParameter("id");
-        // TODO
         Meal meal = new Meal(id.isEmpty() ? null : Integer.valueOf(id),
                 LocalDateTime.parse(request.getParameter("dateTime")),
                 request.getParameter("description"),
-                Integer.parseInt(request.getParameter("calories")), 1);
+                Integer.parseInt(request.getParameter("calories")), DEFAULT_USER_ID);
 
         log.info(meal.isNew() ? "Create {}" : "Update {}", meal);
-        // TODO
-        repository.save(meal, 1);
+        repository.save(meal, DEFAULT_USER_ID);
         response.sendRedirect("meals");
     }
 
@@ -50,15 +50,13 @@ public class MealServlet extends HttpServlet {
             case "delete":
                 int id = getId(request);
                 log.info("Delete {}", id);
-                // TODO
-                repository.delete(id, 1);
+                repository.delete(id, DEFAULT_USER_ID);
                 response.sendRedirect("meals");
                 break;
             case "create":
             case "update":
-                // TODO
                 final Meal meal = "create".equals(action) ?
-                        new Meal(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "", 1000, 1) :
+                        new Meal(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "", 1000, DEFAULT_USER_ID) :
                         repository.get(getId(request), 1);
                 request.setAttribute("meal", meal);
                 request.getRequestDispatcher("/mealForm.jsp").forward(request, response);
@@ -66,9 +64,8 @@ public class MealServlet extends HttpServlet {
             case "all":
             default:
                 log.info("getAll");
-                // TODO
                 request.setAttribute("meals",
-                        MealsUtil.getTos(repository.getAll(1), MealsUtil.DEFAULT_CALORIES_PER_DAY));
+                        MealsUtil.getTos(repository.getAll(DEFAULT_USER_ID), MealsUtil.DEFAULT_CALORIES_PER_DAY));
                 request.getRequestDispatcher("/meals.jsp").forward(request, response);
                 break;
         }
