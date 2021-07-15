@@ -21,6 +21,19 @@
     <h3><a href="index.html">Home</a></h3>
     <hr/>
     <h2>Meals</h2>
+    <form method="get" action="meals">
+        <input type="hidden" name="action" value="getAllFiltered">
+        <label for="datefrom">Date From</label>
+        <br>
+        <input type="date" id="datefrom" name="dateFrom">
+        <br>
+        <label for="dateto">Date To</label>
+        <br>
+        <input type="date" id="dateto" name="dateTo">
+        <br>
+        <button type="submit">Save</button>
+        <br>
+    </form>
     <a href="meals?action=create">Add Meal</a>
     <br><br>
     <table border="1" cellpadding="8" cellspacing="0">

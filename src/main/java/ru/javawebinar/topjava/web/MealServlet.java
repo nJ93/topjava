@@ -31,7 +31,7 @@ import static ru.javawebinar.topjava.util.MealsUtil.DEFAULT_USER_ID;
 public class MealServlet extends HttpServlet {
     private static final Logger log = LoggerFactory.getLogger(MealServlet.class);
 
-    private MealRepository repository;
+//    private MealRepository repository;
     private MealRestController mealRestController;
 
     @Override
@@ -40,17 +40,7 @@ public class MealServlet extends HttpServlet {
             System.out.println("Bean definition names: " + Arrays.toString(appCtx.getBeanDefinitionNames()));
             AdminRestController adminUserController = appCtx.getBean(AdminRestController.class);
             adminUserController.create(new User(null, "userName", "email@mail.ru", "password", Role.ADMIN));
-
             mealRestController = appCtx.getBean(MealRestController.class);
-            mealRestController.create(new Meal(LocalDateTime.of(2020, Month.JANUARY, 30, 10, 0), "Завтрак", 500, DEFAULT_USER_ID));
-            List<MealTo> all = mealRestController.getAll();
-            all.forEach(System.out::println);
-            mealRestController.delete(1);
-            mealRestController.delete(2);
-            mealRestController.delete(6);
-            List<MealTo> all1 = mealRestController.getAll();
-            all1.forEach(System.out::println);
-            mealRestController.get(6);
         }
     }
 
@@ -74,6 +64,10 @@ public class MealServlet extends HttpServlet {
         String action = request.getParameter("action");
 
         switch (action == null ? "all" : action) {
+            case "getAllFiltered":
+                LocalDateTime.parse(request.getParameter("dateFrom"));
+                LocalDateTime.parse(request.getParameter("dateTo"));
+                break;
             case "delete":
                 int id = getId(request);
                 log.info("Delete {}", id);
