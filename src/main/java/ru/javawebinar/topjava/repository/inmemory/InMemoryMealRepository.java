@@ -19,6 +19,7 @@ public class InMemoryMealRepository implements MealRepository {
 
     {
         MealsUtil.meals.forEach(meal -> this.save(meal, MealsUtil.DEFAULT_USER_ID));
+        MealsUtil.mealsSec.forEach(meal -> this.save(meal, 2));
     }
 
     @Override
@@ -55,10 +56,13 @@ public class InMemoryMealRepository implements MealRepository {
     @Override
     public Collection<Meal> getAll(int userId) {
         Map<Integer, Meal> mealMap = repository.get(userId);
-        return mealMap.values()
-                .stream()
-                .sorted(Comparator.comparing(Meal::getDate).reversed())
-                .collect(Collectors.toList());
+        if (mealMap != null) {
+            return mealMap.values()
+                    .stream()
+                    .sorted(Comparator.comparing(Meal::getDate).reversed())
+                    .collect(Collectors.toList());
+        }
+        return null;
     }
 }
 

@@ -19,7 +19,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.Month;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
@@ -61,12 +63,22 @@ public class MealServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
+        String paramId = request.getParameter("userId");
+        if (paramId != null) {
+            SecurityUtil.setAuthUserId(Integer.parseInt(paramId));
+        }
+
 
         switch (action == null ? "all" : action) {
             case "getAllFiltered":
-                LocalDateTime.parse(request.getParameter("dateFrom"));
-                LocalDateTime.parse(request.getParameter("dateTo"));
+                LocalDate dateFrom = LocalDate.parse(request.getParameter("dateFrom"));
+                LocalDate dateTo = LocalDate.parse(request.getParameter("dateTo"));
+                LocalTime timeFrom = LocalTime.parse(request.getParameter("timeFrom"));
+                LocalTime timeTo = LocalTime.parse(request.getParameter("timeTo"));
+                request.setAttribute("meals", mealRestController.getAllFiltered(dateFrom, dateTo, timeFrom, timeTo));
+                request.getRequestDispatcher("/meals.jsp").forward(request, response);
                 break;
             case "delete":
                 int id = getId(request);

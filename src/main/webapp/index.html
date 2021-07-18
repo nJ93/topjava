@@ -2,13 +2,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Java Enterprise (Topjava)</title>
+    <script type="text/javascript">
+        function changeUser() {
+            var userIdSelect = document.getElementById("userId");
+            var userIdValue = userIdSelect.value;
+            var mealHref = document.getElementById("meals");
+            var userHref = document.getElementById("users");
+            mealHref.setAttribute("href", "meals?userId=" + userIdValue);
+            userHref.setAttribute("href", "users?userId=" + userIdValue);
+        }
+        // window.onload = changeUser();
+    </script>
 </head>
-<body>
+<body onload="changeUser()">
 <h3>Проект <a href="https://github.com/JavaWebinar/topjava" target="_blank">Java Enterprise (Topjava)</a></h3>
 <hr>
+<label for="userId">Choose userId</label><br>
+<select name="userId" id="userId" onchange="changeUser()">
+<option selected value="1">1</option>
+<option value="2">2</option>
+</select>
 <ul style="font-size: large">
-    <li><a href="users">Users</a></li>
-    <li><a href="meals">Meals</a></li>
+    <li><a href="users" id="users">Users</a></li>
+    <li><a href="#" id="meals">Meals</a></li>
 </ul>
 </body>
 </html>

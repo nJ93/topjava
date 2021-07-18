@@ -23,13 +23,21 @@
     <h2>Meals</h2>
     <form method="get" action="meals">
         <input type="hidden" name="action" value="getAllFiltered">
-        <label for="datefrom">Date From</label>
+        <label for="dateFrom">Date From</label>
         <br>
-        <input type="date" id="datefrom" name="dateFrom">
+        <input type="date" id="dateFrom" name="dateFrom">
         <br>
-        <label for="dateto">Date To</label>
+        <label for="dateTo">Date To</label>
         <br>
-        <input type="date" id="dateto" name="dateTo">
+        <input type="date" id="dateTo" name="dateTo">
+        <br>
+        <label for="timeFrom">Time From</label>
+        <br>
+        <input type="time" id="timeFrom" name="timeFrom">
+        <br>
+        <label for="timeTo">Time To</label>
+        <br>
+        <input type="time" id="timeTo" name="timeTo">
         <br>
         <button type="submit">Save</button>
         <br>

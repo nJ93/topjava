@@ -5,7 +5,6 @@ import ru.javawebinar.topjava.to.MealTo;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.Month;
 import java.util.Arrays;
 import java.util.Collection;
@@ -28,12 +27,27 @@ public class MealsUtil {
             new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 20, 0), "Ужин", 410, DEFAULT_USER_ID)
     );
 
+    public static final List<Meal> mealsSec = Arrays.asList(
+            new Meal(LocalDateTime.of(2020, Month.JANUARY, 30, 10, 0), "Завтрак", 500, 2),
+            new Meal(LocalDateTime.of(2020, Month.JANUARY, 30, 13, 0), "Обед", 1000, 2),
+            new Meal(LocalDateTime.of(2020, Month.JANUARY, 30, 20, 0), "Ужин", 500, 2),
+            new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 13, 0), "Обед", 500, 2),
+            new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 20, 0), "Ужин", 410, 2)
+    );
+
     public static List<MealTo> getTos(Collection<Meal> meals, int caloriesPerDay) {
         return filterByPredicate(meals, caloriesPerDay, meal -> true);
     }
 
-    public static List<MealTo> getFilteredTos(Collection<Meal> meals, int caloriesPerDay, LocalTime startTime, LocalTime endTime) {
-        return filterByPredicate(meals, caloriesPerDay, meal -> DateTimeUtil.isBetweenHalfOpen(meal.getTime(), startTime, endTime));
+    public static List<MealTo> getFilteredTos(Collection<Meal> meals, int caloriesPerDay, LocalDateTime startTime, LocalDateTime endTime) {
+        List<Meal> filteredMealsByDate = filterMealByPredicate(meals, meal -> DateTimeUtil.isBetweenHalfOpenDate(meal.getDate(), startTime.toLocalDate(), endTime.toLocalDate()));
+        return filterByPredicate(filteredMealsByDate, caloriesPerDay, meal -> DateTimeUtil.isBetweenHalfOpen(meal.getTime(), startTime.toLocalTime(), endTime.toLocalTime()));
+    }
+
+    public static List<Meal> filterMealByPredicate(Collection<Meal> meals, Predicate<Meal> filter) {
+        return meals.stream()
+                .filter(filter)
+                .collect(Collectors.toList());
     }
 
     public static List<MealTo> filterByPredicate(Collection<Meal> meals, int caloriesPerDay, Predicate<Meal> filter) {
