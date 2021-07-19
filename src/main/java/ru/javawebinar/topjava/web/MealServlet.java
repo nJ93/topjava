@@ -53,7 +53,7 @@ public class MealServlet extends HttpServlet {
         Meal meal = new Meal(id.isEmpty() ? null : Integer.valueOf(id),
                 LocalDateTime.parse(request.getParameter("dateTime")),
                 request.getParameter("description"),
-                Integer.parseInt(request.getParameter("calories")), DEFAULT_USER_ID);
+                Integer.parseInt(request.getParameter("calories")), SecurityUtil.authUserId());
 
         log.info(meal.isNew() ? "Create {}" : "Update {}", meal);
 //        repository.save(meal, DEFAULT_USER_ID);
@@ -90,7 +90,7 @@ public class MealServlet extends HttpServlet {
             case "create":
             case "update":
                 final Meal meal = "create".equals(action) ?
-                        new Meal(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "", 1000, DEFAULT_USER_ID) :
+                        new Meal(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "", 1000, SecurityUtil.authUserId()) :
 //                        repository.get(getId(request), 1);
                         mealRestController.get(getId(request));
                 request.setAttribute("meal", meal);
